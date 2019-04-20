@@ -1,3 +1,13 @@
+body{
+  margin: 0;
+  padding: 0;
+}
+
+header{
+  margin: 10px;
+  position: relative;
+}
+
 .container{
   position: absolute;
   top: 0;
@@ -39,8 +49,7 @@ header{
     }
 .rightheader{
     position:absolute;
-    right:0px;
-    float: right;
+    right:0;
     font-family:  'Benton Bold';
     font-size:11.25px;
       /*position:absolute;
@@ -73,16 +82,15 @@ header{
 
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto auto;
-  grid-gap: 10px;
-  padding: 10px;
+  grid-template-columns: 33.33% 33.33% 33.33%;
+  padding: 10px 5px;
   /*grid-gap: 3%;
   padding: 10%;*/
 
 }
 
 .grid-container > div {
-  padding: 20px 0;
+  padding: 20px 5px;
   font-size: 30px;
   /*padding: 20% 0;
   font-size: 80%;*/
