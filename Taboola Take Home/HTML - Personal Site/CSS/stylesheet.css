@@ -1,25 +1,79 @@
+@media only screen and (min-width: 320px) {
 
-@media (min-width:481px)  {
+  /* Small screen, non-retina */
   body{
-  background-color: red;
-  }/* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
-@media (min-width:641px)  {
-  body{
-  background-color: yellow;
-  }/* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ }
-@media (min-width:961px)  {
-  body{
-  background-color: blue;
-  } /* tablet, landscape iPad, lo-res laptops ands desktops */ }
-@media (min-width:1025px) {
-  body{
-  background-color: grey;
-  } /* big landscape tablets, laptops, and desktops */ }
-@media (min-width:1281px) {
-  body{
-  background-color: orange;
-  } /* hi-res laptops and desktops */ }
+    background-color:red
+  }
 
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 320px),
+only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 320px),
+only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 320px),
+only screen and (        min-device-pixel-ratio: 2)      and (min-width: 320px),
+only screen and (                min-resolution: 192dpi) and (min-width: 320px),
+only screen and (                min-resolution: 2dppx)  and (min-width: 320px) {
+
+  /* Small screen, retina, stuff to override above media query */
+  /* Small screen, non-retina */
+  body{
+    background-color:yellow
+  }
+
+}
+
+@media only screen and (min-width: 700px) {
+
+  /* Medium screen, non-retina */
+  /* Small screen, non-retina */
+  body{
+    background-color:green
+  }
+
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 700px),
+only screen and (min--moz-device-pixel-ratio: 2) and (min-width: 700px),
+only screen and (-o-min-device-pixel-ratio: 2/1)and (min-width: 700px),
+only screen and (min-device-pixel-ratio: 2)and (min-width: 700px),
+only screen and (min-resolution: 192dpi)and (min-width: 700px),
+only screen and (min-resolution: 2dppx)and (min-width: 700px) {
+
+  /* Medium screen, retina, stuff to override above media query */
+  /* Small screen, non-retina */
+  body{
+    background-color:orange
+  }
+
+}
+
+@media only screen and (min-width: 1300px) {
+
+  /* Large screen, non-retina */
+  /* Small screen, non-retina */
+  body{
+    background-color:blue
+  }
+
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1300px),
+only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 1300px),
+only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 1300px),
+only screen and (        min-device-pixel-ratio: 2)      and (min-width: 1300px),
+only screen and (                min-resolution: 192dpi) and (min-width: 1300px),
+only screen and (                min-resolution: 2dppx)  and (min-width: 1300px) {
+
+  /* Large screen, retina, stuff to override above media query */
+  /* Small screen, non-retina */
+  body{
+    background-color:grey
+  }
+
+}
 
 body{
   margin: 0;
