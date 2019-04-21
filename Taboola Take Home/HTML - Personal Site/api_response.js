@@ -1,17 +1,25 @@
-function checkCountry(position) {
+function getNewLocation(position) {
+  var newCoordinates = JSON.stringify({
+    lat: position.coords.latitude,
+    lng: position.coords.longitude
+  });
+  localStorage.setItem('latlong', newCoordinates);
+  console.log("generated new");
+  console.log(JSON.parse(newCoordinates));
+
+  checkCountry(position.coords.latitude, position.coords.longitude);
+}
+
+function checkCountry(latitude, longitude) {
 
   var top = 51.3457868; //north lat
   var left = -127.7844079; //west long
   var right = -69.9513812; //east long
-  var bottom =  24.7433195; //south
+  var bottom = 24.7433195; //south
 
-  console.log(position.coords.longitude);
-  console.log(position.coords.latitude);
-
-  if(left<=position.coords.longitude && position.coords.longitude<=right && bottom<=position.coords.latitude && position.coords.latitude<=top){
+  if (left <= longitude && longitude <= right && bottom <= latitude && latitude <= top) {
     console.log("US");
-  }
-  else{
+  } else {
     console.log("not in the US");
     var header = document.querySelector(".leftheader");
     //Display Hindi if not in the US
@@ -20,76 +28,78 @@ function checkCountry(position) {
 }
 var xhr = new XMLHttpRequest();
 xhr.onload = function() {
-  if(xhr.status === 200){
+  if (xhr.status === 200) {
     console.log('success');
     console.log(xhr.responseText);
     var myObj = JSON.parse(xhr.responseText);
     console.log(myObj);
 
-    if(myObj !== null){
+    if (myObj !== null) {
       var list = myObj.list;
-      if (list.length < 6){
+      if (list.length < 6) {
         console.log("Could not process request to get at least 6 ads");
-      }
-      else{
+      } else {
 
         var brandingElements = document.querySelectorAll(".branding");
         var titleElements = document.querySelectorAll(".title");
         var thumbNailElements = document.querySelectorAll(".thumbnail");
 
-        try{
-        for(var i=0; i<6; i++){
+        try {
+          for (var i = 0; i < 6; i++) {
 
-          brandingElements[i].textContent = list[i].branding;
-          titleElements[i].textContent = list[i].name;
-          thumbNailElements[i].src = list[i].thumbnail[0].url;
+            brandingElements[i].textContent = list[i].branding;
+            titleElements[i].textContent = list[i].name;
+            thumbNailElements[i].src = list[i].thumbnail[0].url;
 
-          if (list[i].categories !== undefined && list[i].categories.length !== 0){
-            brandingElements[i].textContent = list[i].categories[0].charAt(0).toUpperCase() + list[i].categories[0].substr(1) + " | " +  brandingElements[i].textContent;
+            if (list[i].categories !== undefined && list[i].categories.length !== 0) {
+              brandingElements[i].textContent = list[i].categories[0].charAt(0).toUpperCase() + list[i].categories[0].substr(1) + " | " + brandingElements[i].textContent;
+            }
+
+            var linkTitle = document.createElement("a");
+            linkTitle.href = list[i].url;
+            linkTitle.target = "_blank";
+            linkTitle.innerHTML = titleElements[i].innerHTML;
+            titleElements[i].replaceChild(linkTitle, titleElements[i].childNodes[0]);
+
+            var linkBrand = document.createElement("a");
+            linkBrand.href = list[i].url;
+            linkBrand.target = "_blank";
+            linkBrand.innerHTML = brandingElements[i].innerHTML;
+            brandingElements[i].replaceChild(linkBrand, brandingElements[i].childNodes[0]);
+
+            var linkImg = document.createElement("a");
+            linkImg.href = list[i].url;
+            linkImg.target = "_blank";
+            var parent = thumbNailElements[i].parentNode;
+            parent.replaceChild(linkImg, thumbNailElements[i]);
+            linkImg.appendChild(thumbNailElements[i]);
+
           }
-
-          var linkTitle = document.createElement("a");
-          linkTitle.href = list[i].url;
-          linkTitle.target = "_blank";
-          linkTitle.innerHTML=titleElements[i].innerHTML;
-          titleElements[i].replaceChild(linkTitle,titleElements[i].childNodes[0]);
-
-          var linkBrand = document.createElement("a");
-          linkBrand.href = list[i].url;
-          linkBrand.target = "_blank";
-          linkBrand.innerHTML = brandingElements[i].innerHTML;
-          brandingElements[i].replaceChild(linkBrand,brandingElements[i].childNodes[0]);
-
-          var linkImg = document.createElement("a");
-          linkImg.href = list[i].url;
-          linkImg.target = "_blank";
-          var parent = thumbNailElements[i].parentNode;
-          parent.replaceChild(linkImg, thumbNailElements[i]);
-          linkImg.appendChild(thumbNailElements[i]);
-
-        }}
-        catch(e){
+        } catch (e) {
           console.log(e.stack);
         }
-    }
+      }
     }
 
-  }
-  else{
+  } else {
     console.log('Couldnt process request');
   }
 };
 
+var oldLocation = localStorage.getItem('latlong');
 
-
-
-if ("geolocation" in navigator) {
-  //geolocation is available
-  navigator.geolocation.getCurrentPosition(checkCountry);
-} else {
-  //geolocation IS NOT available
-  console.log("Geolocation not supported");
+if (oldLocation) {
+  //Pulling from cache
+  console.log("Pulling from cache");
+  console.log(JSON.parse(oldLocation));
+  var coords = JSON.parse(oldLocation);
+  var lat = coords.lat;
+  var lng = coords.lng;
+  checkCountry(lat, lng);
+} else if ("geolocation" in navigator) {
+  navigator.geolocation.getCurrentPosition(getNewLocation);
 }
 
-xhr.open('GET','https://api.taboola.com/1.2/json/apitestaccount/recommendations.get?app.type=web&app.apikey=7be65fc78e52c11727793f68b06d782cff9ede3c&source.id=%2Fdigiday-publishing-summit%2F&source.url=https%3A%2F%2Fblog.taboola.com%2Fdigiday-publishing-summit%2F&source.type=text&placement.organic-type=mix&placement.visible=true&placement.available=true&placement.rec-count=6&placement.name=Below%20Article%20Thumbnails&placement.thumbnail.width=640&placement.thumbnail.height=480&user.session=init');
+//GET HTTP Call
+xhr.open('GET', 'https://api.taboola.com/1.2/json/apitestaccount/recommendations.get?app.type=web&app.apikey=7be65fc78e52c11727793f68b06d782cff9ede3c&source.id=%2Fdigiday-publishing-summit%2F&source.url=https%3A%2F%2Fblog.taboola.com%2Fdigiday-publishing-summit%2F&source.type=text&placement.organic-type=mix&placement.visible=true&placement.available=true&placement.rec-count=6&placement.name=Below%20Article%20Thumbnails&placement.thumbnail.width=640&placement.thumbnail.height=480&user.session=init');
 xhr.send();
