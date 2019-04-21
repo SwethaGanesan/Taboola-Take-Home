@@ -8,14 +8,20 @@ function getNewLocationAndCheckCountry(position) {
   checkCountry(position.coords.latitude, position.coords.longitude);
 }
 
-function checkCountry(latitude, longitude) {
-  //takes lat long as input and checks if within US bounds, if not, changes header text content to display Hindi
+function inContiguousUS(latitude, longitude){
   var top = 51.3457868; //north lat
   var left = -127.7844079; //west long
   var right = -69.9513812; //east long
-  var bottom = 24.7433195; //south
+  var bottom = 24.7433195; //south lat
 
-  if (left > longitude || longitude > right || bottom > latitude || latitude > top) {
+  return (left < longitude && longitude < right &&
+    bottom < latitude && latitude < top)
+}
+
+function checkCountry(latitude, longitude) {
+  if (!inContiguousUS(latitude, longitude)) {
+    // inContiguousUS can be replaced with a call to Google API (or equivalent),
+    // we can also use a locally defined polygon
     var header = document.querySelector(".leftheader");
     //Display Hindi if not in the US
     header.textContent = decodeURIComponent(escape("\xE0\xA4\xB5\xE0\xA5\x87\xE0\xA4\xAC\x20\xE0\xA4\x95\xE0\xA5\x87\x20\xE0\xA4\x86\xE0\xA4\xB8\xE0\xA4\xAA\xE0\xA4\xBE\xE0\xA4\xB8\x20\xE0\xA4\xB8"));
