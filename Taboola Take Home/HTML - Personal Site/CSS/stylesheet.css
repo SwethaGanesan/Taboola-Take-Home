@@ -1,3 +1,26 @@
+
+@media (min-width:481px)  {
+  body{
+  background-color: red;
+  }/* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
+@media (min-width:641px)  {
+  body{
+  background-color: yellow;
+  }/* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ }
+@media (min-width:961px)  {
+  body{
+  background-color: blue;
+  } /* tablet, landscape iPad, lo-res laptops ands desktops */ }
+@media (min-width:1025px) {
+  body{
+  background-color: grey;
+  } /* big landscape tablets, laptops, and desktops */ }
+@media (min-width:1281px) {
+  body{
+  background-color: orange;
+  } /* hi-res laptops and desktops */ }
+
+
 body{
   margin: 0;
   padding: 0;
@@ -118,43 +141,5 @@ a {
   /*white-space: nowrap;
   overflow: hidden;*/
   /*text-overflow: ellipsis;*/
-
-}
-
-
-
-
-@media only screen and (max-width: 768px) {
-  .header{
-      color: black;
-      /*max-height: 72.0px;
-      line-height: 24.0px;*/
-      width: 100%;
-      padding-top:0px;
-      padding-bottom:0px;
-      grid-area:1/1/1/1;
-    }
-
-  .grid-container {
-    display: grid;
-    grid-template-columns: 75%;
-    padding: 5px 2.5px;
-
-    /*grid-gap: 3%;
-    padding: 10%;*/
-
-  }
-
-  .grid-container > div {
-    /*padding: 10px 2.5px;*/
-    font-size: 15px;
-    padding-top:0px;
-    padding-bottom:5px;
-    padding-left:5px;
-    padding-right:5px;
-    /*padding: 20% 0;
-    font-size: 80%;*/
-  }
-
 
 }

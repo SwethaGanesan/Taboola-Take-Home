@@ -5,7 +5,10 @@ function checkCountry(position) {
   var right = -69.9513812; //east long
   var bottom =  24.7433195; //south
 
-  if(left<=position.coords.longitude && position.coords.longitude<=right && bottom<=position.coords.latitude && position.coords.latitude===top){
+  console.log(position.coords.longitude);
+  console.log(position.coords.latitude);
+
+  if(left<=position.coords.longitude && position.coords.longitude<=right && bottom<=position.coords.latitude && position.coords.latitude<=top){
     console.log("US");
   }
   else{
